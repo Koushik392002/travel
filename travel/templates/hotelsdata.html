@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hotel Search</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        .search-box {
+            width: 400px;
+            margin: 80px auto;
+            padding: 25px;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .search-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .search-box input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #007bff;
+        }
+
+        .search-box button {
+            width: 95%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-box button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+{% if request.user.is_authenticated%}
+    <div class="topnav">
+        <a href="/accounts/logout">Logout</a>
+    </div>
+    {%endif%}
+<div class="search-box">
+    <h2>Search Hotels</h2>
+
+    <form method="POST" action="/hotels/search">
+        {% csrf_token %}
+
+        <input type="text" name="city" placeholder="Enter City (e.g. Mumbai)">
+        <button type="submit">Search Hotels</button>
+    </form>
+</div>
+
+</body>
+</html>

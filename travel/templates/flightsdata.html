@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Flights</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            width: 380px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e88e5;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #1e88e5;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1e88e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1565c0;
+        }
+
+        .topnav {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 15px 20px;
+        }
+
+        .topnav a {
+            margin-left: 12px;
+            text-decoration: none;
+            color: #1e88e5;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    {% if request.user.is_authenticated%}
+    <div class="topnav">
+        <a href="/accounts/logout">Logout</a>
+    </div>
+    {%endif%}
+
+    <div class="box">
+        <h2>Search Flights</h2>
+
+        <form method="POST" action="flightsdata">
+            {% csrf_token %}
+
+            <label>Departure City</label>
+            <input type="text" name="departure" placeholder="e.g. Chennai" required>
+
+            <label>Arrival City</label>
+            <input type="text" name="arrival" placeholder="e.g. Delhi" required>
+            <label>Date of Travel</label>
+            <input type="date" name="date" required>
+            <button type="submit">Search Flights</button>
+        </form>
+    </div>
+
+</body>
+</html>

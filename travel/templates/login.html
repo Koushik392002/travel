@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #eef2f7; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; }
+    .box { background:white; padding:30px; width:350px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.1); }
+    h2 { text-align:center; }
+    input { width:100%; padding:10px; margin:8px 0 16px; box-sizing:border-box; }
+    button { width:100%; padding:12px; background:#1e88e5; color:white; border:none; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Login</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <label>Username</label>
+      <input type="text" name="username" required>
+      <label>Password</label>
+      <input type="password" name="password" required>
+      <button type="submit">Login</button>
+    </form>
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+  </div>
+</body>
+</html>

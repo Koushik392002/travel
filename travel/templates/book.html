@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+        }
+
+        /* NAVBAR */
+        .topnav {
+            background: white;
+            padding: 15px 20px;
+            text-align: right;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .topnav a {
+            margin-left: 12px;
+            text-decoration: none;
+            color: #1e88e5;
+            font-weight: bold;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1e88e5;
+            margin-top: 25px;
+        }
+
+        /* GRID */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* HEADER INSIDE CARD */
+        .card-header {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1e88e5;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        /* TILE GRID INSIDE CARD */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tile {
+            background: #f8f9fc;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .tile h4 {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 4px;
+        }
+
+        .tile p {
+            font-size: 14px;
+            font-weight: bold;
+            color: #222;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        /* BUTTON (optional) */
+        .btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 12px;
+            background: #1e88e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .btn:hover {
+            background: #1565c0;
+        }
+
+        /* FULL WIDTH ITEMS */
+        .full {
+            grid-column: span 2;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="topnav">
+    <a href="/">Home</a>
+    {% if user.is_authenticated %}
+        <a href="/accounts/logout">Logout</a>
+    {% endif %}
+</div>
+
+<h2>My Bookings</h2>
+
+<div class="container">
+
+    {% for booking in bookings %}
+
+    <div class="card">
+
+        <!-- HEADER -->
+        <div class="card-header">
+            Booking ID: {{ booking.id }}
+        </div>
+
+        <!-- TILE GRID -->
+        <div class="grid">
+
+            {% if booking.package_type %}
+            <div class="tile">
+                <h4>Package Type</h4>
+                <p>{{ booking.package_type }}</p>
+            </div>
+            {% endif %}
+
+            {% if booking.user_id %}
+            <div class="tile">
+                <h4>User ID</h4>
+                <p>{{ booking.user_id }}</p>
+            </div>
+            {% endif %}
+
+            {% if booking.flight_name %}
+            <div class="tile">
+                <h4>Flight Name</h4>
+                <p>{{ booking.flight_name }}</p>
+            </div>
+            {% endif %}
+
+            {% if booking.hotel_name %}
+            <div class="tile">
+                <h4>Hotel Name</h4>
+                <p>{{ booking.hotel_name }}</p>
+            </div>
+            {% endif %}
+
+            {% if booking.package_name %}
+            <div class="tile full">
+                <h4>Package Name</h4>
+                <p>{{ booking.package_name }}</p>
+            </div>
+            {% endif %}
+
+            {% if booking.place %}
+            <div class="tile full">
+                <h4>Place</h4>
+                <p>{{ booking.place }}</p>
+            </div>
+            {% endif %}
+
+            {% if booking.arrival %}
+            <div class="tile">
+                <h4>Arrival</h4>
+                <p>{{ booking.arrival }}</p>
+            </div>
+            {% endif %}
+
+            {% if booking.departure %}
+            <div class="tile">
+                <h4>Departure</h4>
+                <p>{{ booking.departure }}</p>
+            </div>
+            {% endif %}
+            {% if booking.date %}
+            <div class="tile">
+                <h4>Date</h4>
+                <p>{{ booking.date }}</p>
+            </div>
+            {% endif %}
+            {% if booking.seats_booked %}
+            <div class="tile">
+                <h4>Seats Booked</h4>
+                <p>{{ booking.seats_booked }}</p>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Travel Portal</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f5f7fb; }
+    .hero { text-align: center; padding: 80px 20px; background: #1e88e5; color: white; }
+    .hero h1 { font-size: 42px; margin-bottom: 10px; }
+    .actions { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 20px; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,.08); text-align: center; }
+    .card a { display: inline-block; margin-top: 12px; text-decoration: none; background: #1e88e5; color: white; padding: 10px 16px; border-radius: 8px; }
+    .topnav { text-align: right; padding: 15px 20px; background: rgb(240, 217, 217); }
+    .topnav a { margin-left: 12px; text-decoration: none; color: #1e88e5; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="topnav">
+    {% if user.is_authenticated %}
+         <a href="accounts/logout">Logout</a>
+         <a href="bookings/bookings">Bookings</a>
+    {% else %}
+         <a href="accounts/register">Register</a>
+         <a href="accounts/login">Login</a>
+    {% endif %}
+  </div>
+
+  <div class="hero">
+    <h1>Travel Booking Portal</h1>
+    <p>Book flights, reserve hotels, and discover packages</p>
+  </div>
+
+  <div class="actions">
+    <div class="card">
+      <h2>Book Flights</h2>
+      <a href="flights/search">Explore Flights</a>
+    </div>
+    <div class="card">
+      <h2>Book Hotels</h2>
+      <a href="hotels/search">Explore Hotels</a>
+    </div>
+    <div class="card">
+      <h2>Browse Packages</h2>
+      <a href="packages/search">View Packages</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Flights</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+    }
+
+    .topnav {
+        background: white;
+        padding: 15px 20px;
+        text-align: right;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .topnav a {
+        margin-left: 12px;
+        text-decoration: none;
+        color: #1e88e5;
+        font-weight: bold;
+    }
+
+    h2 {
+        text-align: center;
+        color: #1e88e5;
+        margin-top: 30px;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    .card p {
+        margin: 6px 0;
+        color: #333;
+        font-size: 14px;
+        overflow-wrap: break-word;
+    }
+
+    .card h3 {
+        color: #1e88e5;
+        margin-bottom: 10px;
+    }
+
+    .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-top: 10px;
+    }
+
+    .card * {
+        max-width: 100%;
+    }
+
+    /* Seats input row */
+    .seats-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .seats-row label {
+        font-size: 14px;
+        color: #333;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .seats-input {
+        width: 70px;
+        padding: 8px 10px;
+        border: 1.5px solid #c0d6f5;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #333;
+        outline: none;
+        transition: border-color 0.2s;
+        box-sizing: border-box;
+    }
+
+    .seats-input:focus {
+        border-color: #1e88e5;
+    }
+
+    /* Remove default number input arrows for cleanliness (optional) */
+    .seats-input::-webkit-inner-spin-button,
+    .seats-input::-webkit-outer-spin-button {
+        opacity: 1;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 10px 14px;
+        background: #1e88e5;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        max-width: 100%;
+        box-sizing: border-box;
+        width: 100%;
+        transition: background 0.2s;
+    }
+
+    .btn:hover {
+        background: #1565c0;
+    }
+    </style>
+    <script>
+function setAction(form, hotelId) {
+    const seats = form.querySelector('[name="num_seats"]').value;
+    const date = form.querySelector('[name="date"]').value;
+    form.action = `/bookings/hotel/${hotelId}/${seats}/${date}/`;
+}
+</script>
+</head>
+
+<body>
+
+    <div class="topnav">
+        {% if user.is_authenticated %}
+            <a href="/accounts/logout">Logout</a>
+        {% endif %}
+    </div>
+
+    <h2>Available Hotels</h2>
+
+    <div class="container">
+
+        {% for hotel in hotels %}
+        <div class="card">
+            <h3>{{ hotel.name }}</h3>
+
+            <p><b>Location:</b> {{ hotel.city }}</p>
+            <p><b>Price:</b> ₹ {{ hotel.price_per_night }}</p>
+
+            <form method="POST" action="/bookings/hotel/{{ hotel.id }}/num_seats/date/" onsubmit="setAction(this, {{ hotel.id }})">
+                {% csrf_token %}
+
+                <div class="seats-row">
+                    <label for="seats_{{ hotel.id }}">Seats:</label>
+                    <input
+                        class="seats-input"
+                        type="number"
+                        id="seats_{{ hotel.id }}"
+                        name="num_seats"
+                        value="1"
+                        min="1"
+                        max="10"
+                        required
+                    />
+                </div>
+                <div class="seats-row">
+                    <label for="date_{{ hotel.id }}">Date:</label>
+                    <input
+                        class="seats-input"
+                        type="date"
+                        id="date_{{ hotel.id }}"
+                        name="date"
+                        required
+                    />
+                </div>
+
+                <button type="submit" class="btn">Book Now</button>
+            </form>
+        </div>
+        {% endfor %}
+
+    </div>
+</body>
+</html>
