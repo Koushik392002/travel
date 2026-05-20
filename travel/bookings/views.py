@@ -4,6 +4,7 @@ from django.db import models
 from flights.models import Flight
 from hotels.models import Hotel
 from packages.models import Package
+from django.contrib import messages
 
 def book(request, package, package_id, num_seats):
     if request.user.is_authenticated:
@@ -33,8 +34,9 @@ def book(request, package, package_id, num_seats):
                 date = package_obj.date,
                 seats_booked = num_seats
             )
-            
             return redirect ("bookings")
+    else:
+        return redirect("login")
         
 def bookhotel(request, package, package_id, num_seats, date):
     if request.user.is_authenticated:
@@ -53,8 +55,8 @@ def bookhotel(request, package, package_id, num_seats, date):
             
             return redirect ("bookings")
         else:
-            message.info(request, "No rooms available for this hotel.")
-            return redirect ("hotels/search")
+            messages.info(request, "No rooms available for this hotel.")
+            return redirect ("/hotels/search")
     else:
         return redirect("login")
 def bookings(request):

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -54,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'travel.middleware.DisableClientCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'travel.urls'
@@ -122,6 +122,14 @@ USE_I18N = True
 USE_TZ = True
 
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'koushikkrishnan03@gmail.com'
+EMAIL_HOST_PASSWORD = 'gdfu xeex hjye uhlb'
+DEFAULT_FROM_EMAIL = 'koushikkrishnan03@gmail.com'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 

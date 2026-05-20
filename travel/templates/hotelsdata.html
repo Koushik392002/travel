@@ -67,7 +67,7 @@
     <form method="POST" action="/hotels/search">
         {% csrf_token %}
 
-        <input type="text" name="city" placeholder="Enter City (e.g. Mumbai)">
+        <input type="text" name="city" placeholder="Enter City (e.g. Mumbai)" required>
         <button type="submit">Search Hotels</button>
     </form>
 </div>
