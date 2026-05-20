@@ -5,12 +5,14 @@ from flights.models import Flight
 from hotels.models import Hotel
 from packages.models import Package
 from django.contrib import messages
+from datetime import datetime
+from django.utils import timezone
 
 def book(request, package, package_id, num_seats):
     if request.user.is_authenticated:
         if package == "flight":
             flight = Flight.objects.get(id=package_id)
-            if flight.seats > num_seats:
+            if flight.seats >= num_seats:
                 Booking.objects.create(
                     user=request.user,
                     package_type="flight",
@@ -23,6 +25,8 @@ def book(request, package, package_id, num_seats):
                 )
                 Flight.objects.filter(id=package_id).update(seats=flight.seats - num_seats)
                 return redirect ("bookings")
+            else:
+                return redirect ("/flights/search")
         else:
             package_obj = Package.objects.get(id=package_id)
             Booking.objects.create(
@@ -38,10 +42,17 @@ def book(request, package, package_id, num_seats):
     else:
         return redirect("login")
         
-def bookhotel(request, package, package_id, num_seats, date):
+def bookhotel(request, package, package_id, num_seats,date):
     if request.user.is_authenticated:
         hotel = Hotel.objects.get(id=package_id)
-        if hotel.rooms_available > num_seats:
+        datum = date
+        datum = datetime.strptime(datum, "%Y-%m-%d")
+        aware_date = timezone.make_aware(datum)
+        if str(hotel.date) != str(date):
+            return redirect("/hotels/search")
+        if aware_date < timezone.now():
+            return redirect("/hotels/search")
+        if hotel.rooms_available >= num_seats:
             Booking.objects.create(
                 user=request.user,
                 package_type="hotel",

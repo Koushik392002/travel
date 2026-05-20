@@ -159,7 +159,7 @@ function setAction(form, hotelId) {
             <p><b>Location:</b> {{ hotel.city }}</p>
             <p><b>Price:</b> ₹ {{ hotel.price_per_night }}</p>
 
-            <form method="POST" action="/bookings/hotel/{{ hotel.id }}/num_seats/date/" onsubmit="setAction(this, {{ hotel.id }})">
+            <form method="POST" onsubmit="setAction(this, {{ hotel.id }})">
                 {% csrf_token %}
 
                 <div class="seats-row">
@@ -175,6 +175,7 @@ function setAction(form, hotelId) {
                         required
                     />
                 </div>
+
                 <div class="seats-row">
                     <label for="date_{{ hotel.id }}">Date:</label>
                     <input
@@ -184,7 +185,8 @@ function setAction(form, hotelId) {
                         name="date"
                         required
                     />
-                </div>
+                
+                
 
                 <button type="submit" class="btn">Book Now</button>
             </form>
