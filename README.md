@@ -1,4 +1,4 @@
-🌍 Travel Portal System (Django)
+🌍 Flight, Hotel and package booking platform (Django)
 
 A full-featured Travel Booking Platform that allows users to book flights, hotels, and travel packages in one unified system.
 
